@@ -1,0 +1,28 @@
+.nav {
+  /* border: 1px solid #000; */
+  width: 100%;
+  height: 80px;
+}
+.container {
+  width: 88%;
+  height: 100%;
+  /* border: solid; */
+  margin: auto;
+  display: flex;
+  align-items: center;
+}
+.container span {
+  width: 150px;
+  padding: 7px 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  text-align: center;
+  color: #fff;
+  text-shadow: -1px -1px 0 #c70042;
+  border-color: #cc0447;
+  box-shadow: inset 0 1px 0 0 #faafd4;
+  background: linear-gradient(0deg, #ff5c92 0, #f00252);
+}
+.container span:nth-child(2) {
+  display: none;
+}
