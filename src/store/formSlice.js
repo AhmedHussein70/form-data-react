@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  isHome: false,
+  isAlert: false,
   isLoading: false,
   dataForm: {},
 };
@@ -11,7 +11,7 @@ const formSlice = createSlice({
   initialState,
   reducers: {
     addDataTosending: (state, action) => {
-      state.dataForm = action.payload;
+      state.isAlert = action.payload
     },
   },
 });

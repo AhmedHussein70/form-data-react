@@ -1,55 +1,61 @@
 import { useRef, useState } from "react";
 import "./Form.css";
 import emailjs from "emailjs-com";
-import { useDispatch } from "react-redux";
-import { addDataTosending } from "../store/formSlice";
+import Alert from "./Alert";
 
 export const Form = () => {
-  //   const { dataForm } = useSelector((state) => state.formData);
-  //   console.log(dataForm)
   const initialData = {};
   const formRef = useRef();
   const [data, setData] = useState(initialData);
-  const [dataform, setDataform] = useState({
-    user_name: "",
-    email: "",
-    message: data,
-  });
-
-  const dispatch = useDispatch();
+  const [showAlert, setShowAlert] = useState(false);
+  const [color, setColor] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
-    console.log(value);
+
     setData({ ...data, [id]: value });
   };
+
+  const handleShowAlert = () => {
+    setShowAlert(true);
+  };
+
+  const handleCloseAlert = () => {
+    setShowAlert(false);
+  };
+
   const handleFormData = (e) => {
     e.preventDefault();
-    console.log(formRef.current.value);
+
     try {
       if (formRef.current) {
-        dispatch(addDataTosending(data));
-
         emailjs
           .sendForm(
             "service_fwnxoxj",
-            "template_td5qxps",
+            "template_688clbr",
             e.target,
             "FDhP4mAfIRkqjp6_J"
           )
           .then(
             (result) => {
               console.log(result.text);
-              alert("Email sent successfully!");
-              formRef.current.reset();
+              // alert("Email sent successfully!");
+              setColor("success")
+              setShowAlert(true);
+              handleShowAlert();
+              setErrorMessage("Email sent successfully!");
             },
             (error) => {
               console.log(error.text);
-              alert("Failed to send email. Please try again.");
+              // alert("Failed to send email. Please try again.");
+              setErrorMessage("Failed to send email. Please try again.");
+              setShowAlert(true);
+              setColor("error")
+              handleShowAlert();
             }
           );
       }
-      console.log(data);
     } catch (error) {
       console.error("Failed to send data", error);
     }
@@ -57,6 +63,13 @@ export const Form = () => {
 
   return (
     <>
+      {showAlert && (
+        <Alert
+          message={errorMessage}
+          type={color}
+          onClose={handleCloseAlert}
+        />
+      )}
       <div className="parent-form">
         <p className="paragraf-title">
           Please take the next 5-10 minutes to fill out this form. Yes, we know
@@ -83,6 +96,7 @@ export const Form = () => {
                   <input
                     type="text"
                     id="lastName"
+                    name="lastName"
                     onChange={handleInputChange}
                   />
                   <label htmlFor="lastName">Last Name</label>
@@ -97,6 +111,7 @@ export const Form = () => {
                   <input
                     type="text"
                     id="email"
+                    name="email"
                     placeholder="example@example.com"
                     onChange={handleInputChange}
                     required
@@ -108,6 +123,7 @@ export const Form = () => {
                   <input
                     type="text"
                     id="country"
+                    name="country"
                     onChange={handleInputChange}
                     required
                   />
@@ -123,6 +139,7 @@ export const Form = () => {
                   <input
                     type="text"
                     id="NameOfBrand"
+                    name="NameOfBrand"
                     placeholder="Sub-brand"
                     onChange={handleInputChange}
                     required
@@ -139,6 +156,7 @@ export const Form = () => {
                   <textarea
                     type="text"
                     id="DescriptionOfBrand"
+                    name="DescriptionOfBrand"
                     // placeholder="Sub-brand"
                     onChange={handleInputChange}
                     required
@@ -157,6 +175,7 @@ export const Form = () => {
                   <textarea
                     type="text"
                     id="KeyBenefits"
+                    name="KeyBenefits"
                     placeholder="Sub-brand"
                     onChange={handleInputChange}
                     required
@@ -175,6 +194,7 @@ export const Form = () => {
                   <textarea
                     type="text"
                     id="Competitors"
+                    name="Competitors"
                     onChange={handleInputChange}
                     required
                   />
@@ -193,6 +213,7 @@ export const Form = () => {
                   <input
                     type="text"
                     id="DesignDetails"
+                    name="DesignDetails"
                     onChange={handleInputChange}
                     required
                   />
@@ -211,6 +232,7 @@ export const Form = () => {
                   <textarea
                     type="text"
                     id="DesignGoal"
+                    name="DesignGoal"
                     onChange={handleInputChange}
                     required
                   />
@@ -229,6 +251,7 @@ export const Form = () => {
                   <input
                     type="text"
                     id="ColourScheme"
+                    name="ColourScheme"
                     onChange={handleInputChange}
                     required
                   />
@@ -247,6 +270,7 @@ export const Form = () => {
                   <textarea
                     type="text"
                     id="DescriptionOfLogo"
+                    name="DescriptionOfLogo"
                     onChange={handleInputChange}
                     required
                   />
@@ -264,6 +288,7 @@ export const Form = () => {
                   <input
                     type="text"
                     id="ExactTextForYourLogo"
+                    name="ExactTextForYourLogo"
                     onChange={handleInputChange}
                     required
                   />
@@ -281,6 +306,7 @@ export const Form = () => {
                   <input
                     type="text"
                     id="TaglineSlogan"
+                    name="TaglineSlogan"
                     onChange={handleInputChange}
                     required
                   />
@@ -299,6 +325,7 @@ export const Form = () => {
                   <input
                     type="text"
                     id="TargetAudience"
+                    name="TargetAudience"
                     onChange={handleInputChange}
                     required
                   />
@@ -312,7 +339,7 @@ export const Form = () => {
                 <div className="parent-input">
                   <input
                     type="radio"
-                    name="option"
+                    name="Gender"
                     id="option1"
                     value={"Male"}
                     className="check-box"
@@ -324,7 +351,7 @@ export const Form = () => {
                 <div className="parent-input">
                   <input
                     type="radio"
-                    name="option"
+                    name="Gender"
                     id="option2"
                     value={"Female"}
                     className="check-box"
@@ -336,7 +363,7 @@ export const Form = () => {
                 <div className="parent-input">
                   <input
                     type="radio"
-                    name="option"
+                    name="Gender"
                     id="option3"
                     value={"female And male"}
                     className="check-box"
@@ -354,6 +381,7 @@ export const Form = () => {
                   <input
                     type="number"
                     id="AgeRange"
+                    name="AgeRange"
                     placeholder=""
                     style={{ marginTop: "10px" }}
                     onChange={handleInputChange}
@@ -367,6 +395,7 @@ export const Form = () => {
                   <input
                     type="text"
                     id="GeographicLocation"
+                    name="GeographicLocation"
                     style={{ marginTop: "10px" }}
                     onChange={handleInputChange}
                   />
@@ -376,14 +405,57 @@ export const Form = () => {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="Gender">
-            <div className="parent-input-name">
-              <div className="parent-button">
-                <button className="submit-button" tabIndex="0">
-                  Submit
-                </button>
+
+            <div className="Gender">
+              <h4>Extraa</h4>
+              <div className="parent-input-name">
+                <div className="parent-input">
+                  <input
+                    type="checkbox"
+                    // name="option"
+                    id="WebDesigns"
+                    name="extraa"
+                    value={"Web Designs"}
+                    className="check-box"
+                    onChange={handleInputChange}
+                  />
+                  <label htmlFor="WebDesigns">Web Designs</label>
+                </div>
+
+                <div className="parent-input">
+                  <input
+                    type="checkbox"
+                    // name="option"
+                    id="businesscard"
+                    name="extraa"
+                    value={"business card"}
+                    className="check-box"
+                    onChange={handleInputChange}
+                  />
+                  <label htmlFor="businesscard">business card</label>
+                </div>
+
+                <div className="parent-input">
+                  <input
+                    type="checkbox"
+                    // name="option"
+                    id="notBook"
+                    value={"not Book"}
+                    name="extraa"
+                    className="check-box"
+                    onChange={handleInputChange}
+                  />
+                  <label htmlFor="notBook">not Book</label>
+                </div>
               </div>
+            </div>
+          </div>
+
+          <div className="parent-input-name">
+            <div className="parent-button">
+              <button className="submit-button" tabIndex="0">
+                Submit
+              </button>
             </div>
           </div>
         </form>
