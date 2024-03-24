@@ -41,17 +41,18 @@ export const Form = () => {
             (result) => {
               console.log(result.text);
               // alert("Email sent successfully!");
-              setColor("success")
+              setColor("success");
               setShowAlert(true);
               handleShowAlert();
               setErrorMessage("Email sent successfully!");
+              formRef.current.reset();
             },
             (error) => {
               console.log(error.text);
               // alert("Failed to send email. Please try again.");
               setErrorMessage("Failed to send email. Please try again.");
               setShowAlert(true);
-              setColor("error")
+              setColor("error");
               handleShowAlert();
             }
           );
@@ -64,11 +65,7 @@ export const Form = () => {
   return (
     <>
       {showAlert && (
-        <Alert
-          message={errorMessage}
-          type={color}
-          onClose={handleCloseAlert}
-        />
+        <Alert message={errorMessage} type={color} onClose={handleCloseAlert} />
       )}
       <div className="parent-form">
         <p className="paragraf-title">
